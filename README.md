@@ -4,8 +4,6 @@
 
 This project demonstrates the principles of software packaging in a Node.js application using Express. It was completed as part of a DevOps learning project to understand how applications are packaged, versioned, configured, and prepared for deployment across different environments.
 
-The project follows DevOps best practices by organizing the application into a maintainable structure, separating configuration from source code, and documenting the packaging process.
-
 ---
 
 # Project Objectives
@@ -19,6 +17,7 @@ The objectives of this project were to:
 * Create a reusable and deployable Node.js package.
 * Verify application consistency across multiple environments.
 * Perform dependency security auditing.
+* Automate testing and generate artifact.
 * Document the complete packaging workflow.
 
 ---
@@ -30,6 +29,7 @@ The objectives of this project were to:
 * npm
 * dotenv
 * Nodemon
+* Jest
 * Git
 * GitHub
 * Visual Studio Code
@@ -82,7 +82,8 @@ The workflow followed these steps:
 7. Configure npm scripts for application execution.
 8. Verify application execution in different environments.
 9. Perform dependency security auditing.
-10. Prepare the application for deployment.
+10. Automate testing and generate artifact
+11. Verify artifact integrity
 
 ---
 
@@ -103,6 +104,10 @@ Dependencies were installed using:
 npm install express dotenv
 
 npm install --save-dev nodemon
+
+npm install --save-dev jest
+
+npm install --save-dev supertest
 ```
 
 Dependency versions were automatically locked using:
@@ -165,6 +170,26 @@ Automatically fix dependency vulnerabilities:
 npm audit fix
 ```
 
+Test execution
+
+```bash
+npm test
+```
+Generate distributable artifact.
+
+```bash
+npm pack
+```
+Verify package integrity
+
+```bash
+sha256sum nodejs-software-packaging-project-1.1.0.tgz > SHA256SUMS
+```
+
+```bash
+sha256sum -c SHA256SUMS 
+```
+
 ---
 
 # Environment Configuration
@@ -196,18 +221,6 @@ Versioning strategy:
 * MAJOR version increases for incompatible changes.
 * MINOR version increases when new features are added without breaking existing functionality.
 * PATCH version increases for bug fixes and minor improvements.
-
-Example progression:
-
-```
-1.0.0
-↓
-1.1.0
-↓
-1.1.1
-↓
-2.0.0
-```
 
 ---
 
@@ -254,6 +267,68 @@ Where applicable, vulnerabilities were resolved using:
 ```bash
 npm audit fix
 ```
+
+## Automated Testing
+
+Jest was added as the project's automated testing framework.
+
+Tests can be executed using:
+
+```bash
+npm test
+```
+The application endpoint is tested to verify successful responses and package integrity after installation
+
+---
+
+## Package Artifact
+
+The application package was generated using:
+
+```bash
+npm pack
+```
+
+Generated artifact: 
+
+```text
+software-packaging-nodejs-1.1.0.tgz
+```
+
+This archive can be installed using:
+```bash
+npm install software-packaging-nodejs-1.1.0.tgz
+```
+
+---
+
+## Package Integrity Verification
+
+A SHA256 checksum was generated for the packaged artifact.
+
+Generate checksum:
+
+```bash
+sha256sum software-packaging-nodejs-1.1.0.tgz
+```
+Verify:
+```bash
+sha256sum -c SHA256SUMS
+```
+
+---
+
+## Release Management
+
+Project releases follow Semantic Versioning.
+
+Git tags are used to identify stable releases.
+
+Example:
+
+v1.0.0
+
+v1.1.0
 
 Summary:
 
